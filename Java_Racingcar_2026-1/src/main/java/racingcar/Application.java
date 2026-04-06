@@ -90,13 +90,19 @@ public class Application {
         System.out.println();
     }
 
-    private static void printWinners(List<String> names, int[] positions) {
-        int max = Arrays.stream(positions).max().orElse(0);
+    private static void printWinners(List<Car> cars) {
+        int max = 0;
+
+        for (Car car : cars) {
+            if (car.getPosition() > max) {
+                max = car.getPosition();
+            }
+        }
 
         List<String> winners = new ArrayList<>();
-        for (int i = 0; i < positions.length; i++) {
-            if (positions[i] == max) {
-                winners.add(names.get(i));
+        for (Car car : cars) {
+            if (car.getPosition() == max) {
+                winners.add(car.getName());
             }
         }
 
