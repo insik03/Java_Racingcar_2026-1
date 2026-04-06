@@ -47,29 +47,26 @@ public class Application {
         }
     }
 
-    private static void playGame(List<String> names, int[] positions, int tryCount) {
+    private static void playGame(List<Car> cars, int tryCount) {
         System.out.println();
         System.out.println("실행 결과");
 
         for (int i = 0; i < tryCount; i++) {
-            moveCars(positions);
-            printRound(names, positions);
+            moveCars(cars);
+            printRound(cars);
         }
     }
 
-    private static void moveCars(int[] positions) {
-        for (int i = 0; i < positions.length; i++) {
-            int rand = Randoms.pickNumberInRange(0, 9);
-            if (rand >= 4) {
-                positions[i]++;
-            }
+    private static void moveCars(List<Car> cars) {
+        for (Car car : cars) {
+            car.move();
         }
     }
 
-    private static void printRound(List<String> names, int[] positions) {
-        for (int i = 0; i < names.size(); i++) {
-            System.out.print(names.get(i) + " : ");
-            for (int j = 0; j < positions[i]; j++) {
+    private static void printRound(List<Car> cars) {
+        for (Car car : cars) {
+            System.out.print(car.getName() + " : ");
+            for (int j = 0; j < car.getPosition(); j++) {
                 System.out.print("-");
             }
             System.out.println();
@@ -100,9 +97,12 @@ class Car {
 		this.name = name;
 	}
 
-	public void increase() {
-		position++;
-	}
+	public void move() {
+        int rand = Randoms.pickNumberInRange(0, 9);
+        if (rand >= 4) {
+            position++;
+        }
+    }
 
 	public String getName() {
 		return name;
