@@ -1,11 +1,8 @@
 package racingcar;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
-
-import java.util.*;
 
 public class Application {
 
@@ -17,30 +14,22 @@ public class Application {
         printWinners(cars); 
     }
 
-    private static List<String> inputNames() {
+    private static List<Car> inputCars() {
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
         String input = Console.readLine();
 
-        if (input == null || input.contains(" ")) {
-            throw new IllegalArgumentException();
-        }
-
-        if (input.isBlank() || input.startsWith(",") || input.endsWith(",")) {
-            throw new IllegalArgumentException();
-        }
+        CheckNamesInput(input);
 
         String[] split = input.split(",", -1);
-        List<String> names = new ArrayList<>();
-        Set<String> duplicateCheck = new HashSet<>();
+        Set<String> usedNames = new HashSet<>();
+        List<Car> cars = new ArrayList<>();
 
         for (String name : split) {
-            if (name.isEmpty() || name.length() > 5 || !duplicateCheck.add(name)) {
-                throw new IllegalArgumentException();
-            }
-            names.add(name);
+            CheckName(name, usedNames);
+            cars.add(new Car(name));
         }
-        
-        return names;
+
+        return cars;
     }
 
     private static int inputTryCount() {
