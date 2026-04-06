@@ -31,6 +31,22 @@ public class Application {
 
         return cars;
     }
+    
+    private static void CheckNamesInput(String input) {
+        if (input == null || input.contains(" ")) {
+            throw new IllegalArgumentException();
+        }
+
+        if (input.isBlank() || input.startsWith(",") || input.endsWith(",")) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static void CheckName(String name, Set<String> usedNames) {
+        if (name.isEmpty() || name.length() > 5 || !usedNames.add(name)) {
+            throw new IllegalArgumentException();
+        }
+    }
 
     private static int inputTryCount() {
         System.out.println("시도할 회수는 몇회인가요?");
